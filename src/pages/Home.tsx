@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaGraduationCap, FaBrain, FaLightbulb, FaUsers, FaPlay, FaArrowRight } from 'react-icons/fa';
+import { FaGraduationCap, FaBrain, FaLightbulb, FaUsers, FaArrowRight } from 'react-icons/fa';
 
 const Home: React.FC = () => {
   return (

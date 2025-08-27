@@ -12,7 +12,7 @@ const Dashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>('subscriptions');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = async (email: string, password: string) => {
+  const handleLogin = async (_email: string, _password: string) => {
     setIsLoading(true);
     
     // Simulate login delay

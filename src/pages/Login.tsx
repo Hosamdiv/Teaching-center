@@ -8,7 +8,7 @@ const Login: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = async (email: string, password: string) => {
+  const handleLogin = async (_email: string, _password: string) => {
     setIsLoading(true);
     
     // Simulate login delay
