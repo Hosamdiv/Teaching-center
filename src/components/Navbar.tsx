@@ -10,8 +10,9 @@ import {
   FaUserGraduate,
   FaPhone,
   FaUser,
+  FaSearch,
 } from 'react-icons/fa';
-import { useNavigate } from 'react-router';
+import { useNavigate, Link } from 'react-router';
 
 interface NavItem {
   name: string;
@@ -79,25 +80,29 @@ const Navbar: React.FC = () => {
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-1 space-x-reverse">
             {navItems.map((item, index) => (
-              <motion.a
+              <motion.div
                 key={item.name}
-                href={item.href}
-                className={`group relative px-5 py-3 rounded-lg font-medium transition-all duration-300 ${scrolled
-                  ? 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
-                  : 'text-slate-200 hover:text-white hover:bg-slate-700'
-                  }`}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <div className="flex items-center space-x-2 space-x-reverse">
-                  <span className="group-hover:scale-110 transition-transform duration-200">{item.icon}</span>
-                  <span>{item.name}</span>
-                </div>
-                <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-current opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
-              </motion.a>
+                <Link
+                  to={item.href}
+                  className={`group relative px-5 py-3 rounded-lg font-medium transition-all duration-300 ${
+                    scrolled
+                      ? 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
+                      : 'text-slate-200 hover:text-white hover:bg-slate-700'
+                  }`}
+                >
+                  <div className="flex items-center space-x-2 space-x-reverse">
+                    <span className="group-hover:scale-110 transition-transform duration-200">{item.icon}</span>
+                    <span>{item.name}</span>
+                  </div>
+                  <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-current opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
+                </Link>
+              </motion.div>
             ))}
           </div>
 
@@ -105,31 +110,37 @@ const Navbar: React.FC = () => {
           <div className="flex items-center space-x-3 space-x-reverse">
             {/* Search Button */}
             <motion.button
-              className={`p-3 rounded-lg transition-all duration-300 ${scrolled
-                ? 'text-slate-600 hover:text-blue-600 hover:bg-blue-50'
-                : 'text-slate-300 hover:text-white hover:bg-slate-700'
-                }`}
+              className={`p-3 rounded-lg transition-all duration-300 ${
+                scrolled
+                  ? 'text-slate-600 hover:text-blue-600 hover:bg-blue-50'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-700'
+              }`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
+              <FaSearch className="w-5 h-5" />
             </motion.button>
 
             {/* Login Button */}
-            <motion.a
-              href="/login"
-              className={`hidden lg:inline-flex items-center space-x-2 space-x-reverse px-5 py-3 rounded-lg font-medium transition-all duration-300 ${scrolled
-                ? 'bg-slate-800 text-white hover:bg-slate-700 shadow-md'
-                : 'bg-white text-slate-800 hover:bg-slate-100 shadow-md'
-                }`}
+            <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.8 }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <FaUser className="w-4 h-4" />
-              <span className=''>تسجيل الدخول</span>
-            </motion.a>
+              <Link
+                to="/login"
+                className={`hidden lg:inline-flex items-center space-x-2 space-x-reverse px-5 py-3 rounded-lg font-medium transition-all duration-300 ${
+                  scrolled
+                    ? 'bg-slate-800 text-white hover:bg-slate-700 shadow-md'
+                    : 'bg-white text-slate-800 hover:bg-slate-100 shadow-md'
+                }`}
+              >
+                <FaUser className="w-4 h-4" />
+                <span>تسجيل الدخول</span>
+              </Link>
+            </motion.div>
 
             {/* Contact Button */}
             <motion.a
@@ -184,20 +195,23 @@ const Navbar: React.FC = () => {
           >
             <div className="px-4 py-6 space-y-3">
               {navItems.map((item, index) => (
-                <motion.a
+                <motion.div
                   key={item.name}
-                  href={item.href}
-                  className="flex items-center space-x-3 space-x-reverse p-4 rounded-lg text-slate-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
                   onClick={() => setIsOpen(false)}
                 >
-                  <span className="text-blue-600 text-lg">{item.icon}</span>
-                  <span className="font-medium text-lg">{item.name}</span>
-                </motion.a>
+                  <Link
+                    to={item.href}
+                    className="flex items-center space-x-3 space-x-reverse p-4 rounded-lg text-slate-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200"
+                  >
+                    <span className="text-blue-600 text-lg">{item.icon}</span>
+                    <span className="font-medium text-lg">{item.name}</span>
+                  </Link>
+                </motion.div>
               ))}
-
+              
               {/* Mobile Login Button */}
               <motion.div
                 className="pt-4 border-t border-gray-200"
@@ -205,14 +219,14 @@ const Navbar: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.8 }}
               >
-                <a
-                  href="/login"
+                <Link
+                  to="/login"
                   className="inline-flex items-center justify-center w-full space-x-2 space-x-reverse px-6 py-4 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-700 transition-all duration-200 shadow-md"
                   onClick={() => setIsOpen(false)}
                 >
                   <FaUser className="w-5 h-5" />
                   <span className="text-lg">تسجيل الدخول</span>
-                </a>
+                </Link>
               </motion.div>
 
               {/* Mobile Contact Button */}
