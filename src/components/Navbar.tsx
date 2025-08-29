@@ -10,7 +10,6 @@ import {
   FaUserGraduate,
   FaPhone,
   FaUser,
-  FaSearch,
 } from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router';
 
@@ -24,12 +23,28 @@ const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
-  const navItems: NavItem[] = [
-    { name: 'الرئيسية', href: '/', icon: <FaHome className="w-4 h-4" /> },
-    { name: 'علم النفس', href: '/psychology', icon: <FaBrain className="w-4 h-4" /> },
-    { name: 'الفلسفة', href: '/philosophy', icon: <FaLightbulb className="w-4 h-4" /> },
-    { name: 'الطلاب', href: '/students', icon: <FaUserGraduate className="w-4 h-4" /> },
-  ];
+const navItems: NavItem[] = [
+  { 
+    name: 'الرئيسية', 
+    href: '/', 
+    icon: <FaHome className="w-4 h-4 text-blue-600" /> 
+  },
+  { 
+    name: 'علم النفس', 
+    href: '/psychology', 
+    icon: <FaBrain className="w-4 h-4 text-purple-600" /> 
+  },
+  { 
+    name: 'الفلسفة', 
+    href: '/philosophy', 
+    icon: <FaLightbulb className="w-4 h-4 text-yellow-500" /> 
+  },
+  { 
+    name: 'الطلاب', 
+    href: '/students', 
+    icon: <FaUserGraduate className="w-4 h-4 text-emerald-600" /> 
+  },
+];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -78,7 +93,7 @@ const Navbar: React.FC = () => {
           </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-1 space-x-reverse">
+          <div className="hidden lg:flex  items-center">
             {navItems.map((item, index) => (
               <motion.div
                 key={item.name}
@@ -89,37 +104,18 @@ const Navbar: React.FC = () => {
                 whileTap={{ scale: 0.98 }}
               >
                 <Link
-                  to={item.href}
-                  className={`group relative px-5 py-3 rounded-lg font-medium transition-all duration-300 ${
-                    scrolled
-                      ? 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
-                      : 'text-slate-200 hover:text-white hover:bg-slate-700'
-                  }`}
-                >
-                  <div className="flex items-center space-x-2 space-x-reverse">
-                    <span className="group-hover:scale-110 transition-transform duration-200">{item.icon}</span>
-                    <span>{item.name}</span>
-                  </div>
-                  <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-current opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
+                  className=' flex items-center space-x-reverse space-x-2 py-2 px-3 '
+                  to={item.href}>
+                  <span>{item.icon}</span>
+                  <h1>{item.name}</h1>
                 </Link>
+
               </motion.div>
             ))}
           </div>
 
           {/* Right Side Buttons */}
           <div className="flex items-center space-x-3 space-x-reverse">
-            {/* Search Button */}
-            <motion.button
-              className={`p-3 rounded-lg transition-all duration-300 ${
-                scrolled
-                  ? 'text-slate-600 hover:text-blue-600 hover:bg-blue-50'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-700'
-              }`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <FaSearch className="w-5 h-5" />
-            </motion.button>
 
             {/* Login Button */}
             <motion.div
@@ -131,11 +127,10 @@ const Navbar: React.FC = () => {
             >
               <Link
                 to="/login"
-                className={`hidden lg:inline-flex items-center space-x-2 space-x-reverse px-5 py-3 rounded-lg font-medium transition-all duration-300 ${
-                  scrolled
-                    ? 'bg-slate-800 text-white hover:bg-slate-700 shadow-md'
-                    : 'bg-white text-slate-800 hover:bg-slate-100 shadow-md'
-                }`}
+                className={`hidden lg:inline-flex items-center space-x-2 space-x-reverse px-5 py-3 rounded-lg font-medium transition-all duration-300 ${scrolled
+                  ? 'bg-slate-800 text-white hover:bg-slate-700 shadow-md'
+                  : 'bg-white text-slate-800 hover:bg-slate-100 shadow-md'
+                  }`}
               >
                 <FaUser className="w-4 h-4" />
                 <span>تسجيل الدخول</span>
@@ -211,7 +206,7 @@ const Navbar: React.FC = () => {
                   </Link>
                 </motion.div>
               ))}
-              
+
               {/* Mobile Login Button */}
               <motion.div
                 className="pt-4 border-t border-gray-200"

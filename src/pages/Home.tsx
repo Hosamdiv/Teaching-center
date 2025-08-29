@@ -3,16 +3,18 @@ import { motion } from 'framer-motion';
 import { FaGraduationCap, FaBrain, FaLightbulb, FaUsers, FaArrowRight, FaPlay, FaBookOpen, FaStar } from 'react-icons/fa';
 
 const Home: React.FC = () => {
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
       {/* Hero Section */}
+
       <div className="pt-32 pb-24 px-6 relative overflow-hidden">
         {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
           <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-indigo-400/20 to-blue-400/20 rounded-full blur-3xl"></div>
         </div>
-        
+
         <div className="max-w-7xl mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -39,12 +41,23 @@ const Home: React.FC = () => {
             {/* Enhanced Title */}
             <div className='mb-8'>
               <h1 className="text-5xl lg:text-6xl font-bold mb-4">
-                <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                <motion.span
+                  initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  transition={{ duration: 1, ease: "easeOut" }}
+                  className="bg-gradient-to-r pb-5 from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent inline-block"
+                >
                   مركز التدريس
-                </span>
-                <span className="block text-3xl pb-3 lg:text-4xl text-gray-700 mt-4 font-medium bg-gradient-to-r from-gray-600 to-gray-800 bg-clip-text text-transparent">
+                </motion.span>
+
+                <motion.span
+                  initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  transition={{ duration: 1, ease: "easeOut", delay: 0.3 }} // ⬅️ delay يخليها تظهر بعد الأولى
+                  className="block text-3xl pb-3 lg:text-4xl mt-4 font-medium bg-gradient-to-r from-gray-600 to-gray-800 bg-clip-text text-transparent"
+                >
                   علم النفس والفلسفة
-                </span>
+                </motion.span>
               </h1>
             </div>
 
@@ -66,7 +79,7 @@ const Home: React.FC = () => {
                   ابدأ التعلم الآن
                 </div>
               </motion.button>
-              
+
               <motion.button
                 className="group relative px-12 py-6 bg-white/80 backdrop-blur-sm text-gray-700 rounded-2xl text-lg font-bold hover:bg-white transition-all duration-300 shadow-2xl hover:shadow-gray-500/25 transform hover:-translate-y-2 border border-gray-200/50"
                 whileHover={{ scale: 1.02 }}
@@ -156,7 +169,7 @@ const Home: React.FC = () => {
             <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.15)_1px,transparent_0)] bg-[length:20px_20px]"></div>
           </div>
         </div>
-        
+
         <div className="max-w-4xl mx-auto text-center text-white relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

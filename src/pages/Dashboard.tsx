@@ -14,7 +14,9 @@ const Dashboard: React.FC = () => {
 
   const handleLogin = async (_email: string, _password: string) => {
     setIsLoading(true);
-    
+    console.log(_email);
+    console.log(_password);
+
     // Simulate login delay
     setTimeout(() => {
       setIsLoggedIn(true);
@@ -50,7 +52,7 @@ const Dashboard: React.FC = () => {
       case 'analytics':
         return (
           <div className="max-w-7xl mx-auto p-6">
-            <motion.div 
+            <motion.div
               className="mb-8"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -59,7 +61,7 @@ const Dashboard: React.FC = () => {
               <h1 className="text-3xl font-bold text-gray-900 mb-2 text-right">لوحة الإحصائيات</h1>
               <p className="text-gray-600 text-right">نظرة عامة على أداء المركز التعليمي</p>
             </motion.div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
               <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-200">
                 <div className="text-right">
@@ -150,7 +152,7 @@ const Dashboard: React.FC = () => {
       case 'settings':
         return (
           <div className="max-w-7xl mx-auto p-6">
-            <motion.div 
+            <motion.div
               className="mb-8"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -159,7 +161,7 @@ const Dashboard: React.FC = () => {
               <h1 className="text-3xl font-bold text-gray-900 mb-2 text-right">الإعدادات</h1>
               <p className="text-gray-600 text-right">تخصيص إعدادات المركز التعليمي</p>
             </motion.div>
-            
+
             <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
               <div className="space-y-6">
                 <div>
@@ -248,7 +250,7 @@ const Dashboard: React.FC = () => {
               <FaSignOutAlt />
               <span>تسجيل الخروج</span>
             </motion.button>
-            
+
             <div className="text-right">
               <h1 className="text-2xl font-bold text-gray-900">مرحباً بك في لوحة التحكم</h1>
               <p className="text-gray-600">إدارة مركز التدريس التعليمي</p>
@@ -268,11 +270,10 @@ const Dashboard: React.FC = () => {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as TabType)}
-                  className={`flex items-center space-x-2 space-x-reverse py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200 ${
-                    isActive
+                  className={`flex items-center space-x-2 space-x-reverse py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200 ${isActive
                       ? `border-${tab.color}-500 text-${tab.color}-600`
                       : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                  }`}
+                    }`}
                 >
                   <Icon className="w-4 h-4" />
                   <span>{tab.name}</span>

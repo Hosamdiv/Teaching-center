@@ -10,7 +10,9 @@ const Login: React.FC = () => {
 
   const handleLogin = async (_email: string, _password: string) => {
     setIsLoading(true);
-
+    console.log(_email);
+    console.log(_password);
+    
     setTimeout(() => {
       setIsLoading(false);
       navigate('/dashboard');
