@@ -28,13 +28,13 @@ const Dashboard: React.FC = () => {
     setIsLoggedIn(false);
   };
 
-  // if (!isLoggedIn) {
-  //   return (
-  //     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4">
-  //       <LoginForm onLogin={handleLogin} isLoading={isLoading} />
-  //     </div>
-  //   );
-  // }
+  if (isLoggedIn) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4">
+        <LoginForm onLogin={handleLogin} isLoading={isLoading} />
+      </div>
+    );
+  }
 
   const tabs = [
     { id: 'subscriptions', name: 'الإشتراكات', icon: FaUsers, color: 'blue' },
