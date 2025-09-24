@@ -6,7 +6,7 @@ const RootLayout: React.FC = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <main>
+      <main className='pt-20'>
         <Outlet />
       </main>
     </div>

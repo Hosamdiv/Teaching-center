@@ -12,7 +12,7 @@ const Login: React.FC = () => {
     setIsLoading(true);
     console.log(_email);
     console.log(_password);
-    
+
     setTimeout(() => {
       setIsLoading(false);
       navigate('/dashboard');
@@ -54,7 +54,7 @@ const Login: React.FC = () => {
 
               {/* Enhanced Features List */}
               <div className="space-y-6 text-right mb-10">
-                <motion.div 
+                <motion.div
                   className="flex items-center space-x-4 space-x-reverse justify-center lg:justify-end group"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -63,8 +63,8 @@ const Login: React.FC = () => {
                   <div className="w-4 h-4 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full shadow-lg group-hover:scale-125 transition-transform duration-300"></div>
                   <span className="text-gray-700 text-lg font-medium group-hover:text-gray-900 transition-colors duration-300">محاضرات مسجلة عالية الجودة</span>
                 </motion.div>
-                
-                <motion.div 
+
+                <motion.div
                   className="flex items-center space-x-4 space-x-reverse justify-center lg:justify-end group"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -73,8 +73,8 @@ const Login: React.FC = () => {
                   <div className="w-4 h-4 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full shadow-lg group-hover:scale-125 transition-transform duration-300"></div>
                   <span className="text-gray-700 text-lg font-medium group-hover:text-gray-900 transition-colors duration-300">محتوى تعليمي متخصص</span>
                 </motion.div>
-                
-                <motion.div 
+
+                <motion.div
                   className="flex items-center space-x-4 space-x-reverse justify-center lg:justify-end group"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}

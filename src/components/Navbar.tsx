@@ -58,7 +58,7 @@ const navItems: NavItem[] = [
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
+    <nav className={`fixed top-0  left-0 right-0 z-50 transition-all duration-500 ${scrolled
       ? 'bg-white shadow-lg border-b border-gray-200'
       : 'bg-slate-800'
       }`}>
@@ -75,7 +75,7 @@ const navItems: NavItem[] = [
             <div className="relative"
 
             >
-              <div className="w-14 h-14  bg-slate-700  rounded-xl flex items-center justify-center shadow-md border border-slate-600">
+              <div className="w-14 h-14 bg-slate-700  rounded-xl flex items-center justify-center shadow-md border border-slate-600">
                 <FaGraduationCap className="w-7 h-7  text-white" />
               </div>
               <div className="absolute -top-1 -right-1 w-3 h-3 bg-blue-500 rounded-full border-2 border-white"></div>
