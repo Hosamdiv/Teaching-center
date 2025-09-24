@@ -12,6 +12,7 @@ import {
   FaUser,
 } from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router';
+import { MdDashboard } from 'react-icons/md';
 
 interface NavItem {
   name: string;
@@ -23,28 +24,33 @@ const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
-const navItems: NavItem[] = [
-  { 
-    name: 'الرئيسية', 
-    href: '/', 
-    icon: <FaHome className="w-4 h-4 text-blue-600" /> 
-  },
-  { 
-    name: 'علم النفس', 
-    href: '/psychology', 
-    icon: <FaBrain className="w-4 h-4 text-purple-600" /> 
-  },
-  { 
-    name: 'الفلسفة', 
-    href: '/philosophy', 
-    icon: <FaLightbulb className="w-4 h-4 text-yellow-500" /> 
-  },
-  { 
-    name: 'الطلاب', 
-    href: '/students', 
-    icon: <FaUserGraduate className="w-4 h-4 text-emerald-600" /> 
-  },
-];
+  const navItems: NavItem[] = [
+    {
+      name: 'الرئيسية',
+      href: '/',
+      icon: <FaHome className="w-4 h-4 text-blue-600" />
+    },
+    {
+      name: 'علم النفس',
+      href: '/psychology',
+      icon: <FaBrain className="w-4 h-4 text-purple-600" />
+    },
+    {
+      name: 'الفلسفة',
+      href: '/philosophy',
+      icon: <FaLightbulb className="w-4 h-4 text-yellow-500" />
+    },
+    {
+      name: 'الطلاب',
+      href: '/students',
+      icon: <FaUserGraduate className="w-4 h-4 text-emerald-600" />
+    },
+    {
+      name: 'dashboard',
+      href: '/dashboard',
+      icon: <MdDashboard  className="w-4 h-4 text-emerald-600" />
+    },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {

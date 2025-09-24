@@ -28,13 +28,13 @@ const Dashboard: React.FC = () => {
     setIsLoggedIn(false);
   };
 
-  if (!isLoggedIn) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4">
-        <LoginForm onLogin={handleLogin} isLoading={isLoading} />
-      </div>
-    );
-  }
+  // if (!isLoggedIn) {
+  //   return (
+  //     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4">
+  //       <LoginForm onLogin={handleLogin} isLoading={isLoading} />
+  //     </div>
+  //   );
+  // }
 
   const tabs = [
     { id: 'subscriptions', name: 'الإشتراكات', icon: FaUsers, color: 'blue' },
@@ -192,7 +192,7 @@ const Dashboard: React.FC = () => {
                   <h3 className="text-lg font-semibold mb-4 text-right">إعدادات الإشتراكات</h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2 text-right">الإشتراك الشهري (ريال)</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2 text-right">الإشتراك الشهري ([جنيه])</label>
                       <input
                         type="number"
                         defaultValue="199"
@@ -201,7 +201,7 @@ const Dashboard: React.FC = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2 text-right">الإشتراك الربع سنوي (ريال)</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2 text-right">الإشتراك الربع سنوي (جنيه)</label>
                       <input
                         type="number"
                         defaultValue="549"
@@ -210,7 +210,7 @@ const Dashboard: React.FC = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2 text-right">الإشتراك السنوي (ريال)</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2 text-right">الإشتراك السنوي (جنيه)</label>
                       <input
                         type="number"
                         defaultValue="1999"
