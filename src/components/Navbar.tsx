@@ -48,7 +48,7 @@ const Navbar: React.FC = () => {
     {
       name: 'dashboard',
       href: '/dashboard',
-      icon: <MdDashboard  className="w-4 h-4 text-emerald-600" />
+      icon: <MdDashboard className="w-4 h-4 text-emerald-600" />
     },
   ];
 
@@ -64,9 +64,9 @@ const Navbar: React.FC = () => {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <nav className={`fixed top-0  left-0 right-0 z-50 transition-all duration-500 ${scrolled
-      ? 'bg-white shadow-lg border-b border-gray-200'
-      : 'bg-slate-800'
+    <nav className={`fixed top-0 font-medium left-0 right-0 z-50 transition-all duration-500 ${scrolled
+      ? 'bg-white text-slate-800  shadow-lg border-b border-gray-200'
+      : 'bg-slate-800 '
       }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
