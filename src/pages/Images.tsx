@@ -1,29 +1,16 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 
-interface IDate {
-    title: string;
-    id?: number;
-    thumbnail: string;
-
-}
 const Images = () => {
-    const [data, setData] = useState<IDate[]>([]);
     const [count, setCount] = useState<number>(0);
-
-    const fetchApi = async () => {
-        const { data } = await axios.get("https://dummyjson.com/products");
-        setData(data.products);
-    };
-
+    const data = Array.from({ length: 50 }, (_, i) => ({
+        id: i + 1,
+        thumbnail: `https://picsum.photos/300/${200 + (i % 10) * 30}`,
+    }));
+ 
 
     useEffect(() => {
         console.log("Effect running, starting interval...");
-        if (count > 5) {
-            fetchApi();
-        } else {
-            setData([]);
-        }
+  
 
         // cleanup
         return () => {
@@ -52,7 +39,7 @@ const Images = () => {
                         <img
                             key={item.id}
                             src={item.thumbnail}
-                            alt={item.title}
+                            alt={""}
                             className="mt-2 w-full h-auto border-2 border-white/50 rounded-lg transition duration-300 ease-in-out hover:scale-105"
                         />
                     ))}
