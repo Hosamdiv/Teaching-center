@@ -12,7 +12,7 @@ const TestPage = () => {
     const saveUsers = localStorage.getItem("users");
     return saveUsers ? JSON.parse(saveUsers) : [];
   });
-
+  
   const [formData, setFormData] = useState<IUser>({
     id: 0,
     username: "",
@@ -57,11 +57,7 @@ const TestPage = () => {
     e.preventDefault();
     const newUser = { ...formData, id: Date.now() };
 
-    // const updatedUsers = [...users, newUser];
-
     setUsers([...users, newUser]);
-
-    // localStorage.setItem("users", JSON.stringify(updatedUsers));
 
     setFormData({ id: 0, username: "", age: 0, address: "" });
     usernameRef.current?.focus(); // يرجع لأول input

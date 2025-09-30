@@ -4,7 +4,7 @@ import Home from "../pages/Home";
 import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import TestPage from "../pages/TestPage";
-import ElzeroCircle from "../pages/NewPage";
+import Images from "../pages/Images";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -14,8 +14,8 @@ const router = createBrowserRouter(
                 <Route index element={<Home />} />
                 <Route path="login" element={<Login />} />
                 <Route path="dashboard" element={<Dashboard />} />
-                <Route path="psychology" element={< TestPage/>} />
-                <Route path="philosophy" element={<ElzeroCircle />} />
+                <Route path="psychology" element={< TestPage />} />
+                <Route path="philosophy" element={<Images />} />
                 <Route path="students" element={<Home />} />
                 <Route path="contact" element={<Home />} />
             </Route>
