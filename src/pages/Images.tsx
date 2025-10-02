@@ -7,6 +7,7 @@ const Images = () => {
     const [count, setCount] = useState<number>(0);
     const [data, setData] = useState<IDate[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [imagesCount, setImagesCount] = useState<number>(5)
 
 
     useEffect(() => {
@@ -32,7 +33,7 @@ const Images = () => {
         setIsLoading(true);
         if (count >= 5) {
 
-            const newData = Array.from({ length: 50 }, (_, i) => ({
+            const newData = Array.from({ length: imagesCount }, (_, i) => ({
                 id: i + 1,
                 thumbnail: `https://picsum.photos/300/${200 + (i % 10) * 30}`,
             }));
@@ -42,12 +43,32 @@ const Images = () => {
         } else {
             setData([]);
         }
-    }, [count]);
+    }, [count, imagesCount]);
+    const handelLength = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        const { value } = e.target;
+        const num = Number(value);
 
+        if (num <= 200) {
+            setImagesCount(num);
+        }
+
+    }
     return (
         <>
-            <div className="space-x-2 mb-3">
-                <h1>counter : {count}</h1>
+            <div className="space-x-2 mb-3 ml-2 ">
+                {!isLoading ?
+                    <h1 className="text-3xl font-medium text-green-600"
+                    >I've got the pictures 🥇🎉🏆✨</h1>
+                    : <h1>seconds : {count}</h1>}
+                <input
+                    className="border p-2 mt-2 rounded"
+                    type="number"
+                    name="number"
+                    max={200}
+                    value={imagesCount}
+                    onChange={handelLength}
+                    placeholder="add number" />
             </div>
             {isLoading ? <h1>Stop for 5 seconds</h1> :
                 <div className="flex  justify-center  items-center min-h-screen overflow-x-hidden bg-[#181818]">
