@@ -5,6 +5,7 @@ import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import TestPage from "../pages/TestPage";
 import Images from "../pages/Images";
+import TestHook from "../Hooks/TestHook";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -16,7 +17,7 @@ const router = createBrowserRouter(
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="psychology" element={< TestPage />} />
                 <Route path="philosophy" element={<Images />} />
-                <Route path="students" element={<Home />} />
+                <Route path="students" element={<TestHook />} />
                 <Route path="contact" element={<Home />} />
             </Route>
         </>

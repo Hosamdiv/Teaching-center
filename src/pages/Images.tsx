@@ -7,7 +7,7 @@ const Images = () => {
     const [count, setCount] = useState<number>(0);
     const [data, setData] = useState<IDate[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [imagesCount, setImagesCount] = useState<number>(5)
+    const [imagesCount, setImagesCount] = useState<number>(0)
 
 
     useEffect(() => {
