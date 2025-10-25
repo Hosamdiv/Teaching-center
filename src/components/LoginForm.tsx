@@ -17,16 +17,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, isLoading = false }) => 
     e.preventDefault();
     setErrors({});
 
-    // Validation
-    if (!email) {
-      setErrors(prev => ({ ...prev, email: 'البريد الإلكتروني مطلوب' }));
-      return;
-    }
-    if (!password) {
-      setErrors(prev => ({ ...prev, password: 'كلمة المرور مطلوبة' }));
-      return;
-    }
-
+   
     onLogin(email, password);
   };
 

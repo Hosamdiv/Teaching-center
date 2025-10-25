@@ -12,7 +12,7 @@ const TestPage = () => {
     const saveUsers = localStorage.getItem("users");
     return saveUsers ? JSON.parse(saveUsers) : [];
   });
-  
+
   const [formData, setFormData] = useState<IUser>({
     id: 0,
     username: "",
@@ -66,7 +66,7 @@ const TestPage = () => {
 
   return (
     <div>
-      <form className="space-x-3" onSubmit={handelSubmit}>
+      <form className="space-x-3 text-center" onSubmit={handelSubmit}>
         <input
           ref={usernameRef}
           className="border rounded p-1"
