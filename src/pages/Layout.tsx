@@ -1,16 +1,17 @@
-import React from 'react';
 import { Outlet } from 'react-router';
 import Navbar from '../components/Navbar';
 
-const RootLayout: React.FC = () => {
+const RootLayout = () => {
+
+
   return (
     <div className="min-h-screen">
       <Navbar />
-      <main className='pt-20'>
+      <div className="pt-20">
         <Outlet />
-      </main>
+      </div>
     </div>
   );
 };
 
-export default RootLayout; 
+export default RootLayout;

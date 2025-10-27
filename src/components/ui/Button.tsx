@@ -2,12 +2,12 @@ import type { ReactNode } from "react"
 
 interface IButton {
     children: ReactNode,
-    styles: string
+    styles?: string
 }
 const Button = ({ styles, children }: IButton) => {
     return (
-        <button type="button" className={`${styles} bg-indigo-500 space-x-1 flex items-center rounded mt-3 px-3 py-2`} disabled>
-            <svg className=" mr-1 size-5 animate-spin ..." viewBox="0 0 24 24">
+        <button type="button" className={`${styles}  bg-indigo-500 space-x-1 flex items-center rounded mt px-3 py-2`} disabled>
+            <svg className=" size-5 animate-spin ..." viewBox="0 0 24 24">
                 <circle
                     className="opacity-25"
                     cx="12"

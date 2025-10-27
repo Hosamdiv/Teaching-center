@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaUser, FaLock, FaEye, FaEyeSlash, FaGraduationCap } from 'react-icons/fa';
+import { Link } from 'react-router';
 
 interface LoginFormProps {
   onLogin: (email: string, password: string) => void;
@@ -13,22 +14,32 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, isLoading = false }) => 
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
 
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const newErrors: { email?: string; password?: string } = {};
+
+    if (!email.trim()) {
+      newErrors.email = "البريد الإلكتروني مطلوب";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = "يرجى إدخال بريد إلكتروني صالح";
+    }
+
+    if (!password.trim()) {
+      newErrors.password = "كلمة المرور مطلوبة";
+    } else if (password.length < 6) {
+      newErrors.password = "كلمة المرور يجب أن تكون على الأقل 6 أحرف";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return; // وقف الإرسال لو في أخطاء
+    }
+
     setErrors({});
-
-    // Validation
-    if (!email) {
-      setErrors(prev => ({ ...prev, email: 'البريد الإلكتروني مطلوب' }));
-      return;
-    }
-    if (!password) {
-      setErrors(prev => ({ ...prev, password: 'كلمة المرور مطلوبة' }));
-      return;
-    }
-
     onLogin(email, password);
   };
+
 
   return (
     <motion.div
@@ -65,17 +76,17 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, isLoading = false }) => 
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className={`block w-full pr-12 pl-4 py-4 border-2 rounded-2xl text-right transition-all duration-300 text-lg text-gray-800 placeholder-gray-500 ${
-                  errors.email 
-                    ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20 bg-red-50' 
-                    : 'border-gray-200 focus:border-blue-500 focus:ring-blue-500/20 hover:border-gray-300 bg-white'
-                } focus:outline-none focus:ring-4 focus:ring-opacity-20`}
+                className={`block w-full pr-12 pl-4 py-4 border-2 rounded-2xl text-right transition-all duration-300 text-lg text-gray-800 placeholder-gray-500 ${errors.email
+                  ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20 bg-red-50'
+                  : 'border-gray-200 focus:border-blue-500 focus:ring-blue-500/20 hover:border-gray-300 bg-white'
+                  } focus:outline-none focus:ring-4 focus:ring-opacity-20`}
                 placeholder="أدخل بريدك الإلكتروني"
                 dir="rtl"
               />
+
             </div>
             {errors.email && (
-              <motion.p 
+              <motion.p
                 className="mt-2 text-sm text-red-600 text-right"
                 initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -99,13 +110,13 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, isLoading = false }) => 
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className={`block w-full pr-12 pl-4 py-4 border-2 rounded-2xl text-right transition-all duration-300 text-lg text-gray-800 placeholder-gray-500 ${
-                  errors.password 
-                    ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20 bg-red-50' 
-                    : 'border-gray-200 focus:border-blue-500 focus:ring-blue-500/20 hover:border-gray-300 bg-white'
-                } focus:outline-none focus:ring-4 focus:ring-opacity-20`}
+                className={`block w-full pr-12 pl-4 py-4 border-2 rounded-2xl text-right transition-all duration-300 text-lg text-gray-800 placeholder-gray-500 ${errors.password
+                  ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20 bg-red-50'
+                  : 'border-gray-200 focus:border-blue-500 focus:ring-blue-500/20 hover:border-gray-300 bg-white'
+                  } focus:outline-none focus:ring-4 focus:ring-opacity-20`}
                 placeholder="أدخل كلمة المرور"
                 dir="rtl"
+
               />
               <button
                 type="button"
@@ -120,7 +131,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, isLoading = false }) => 
               </button>
             </div>
             {errors.password && (
-              <motion.p 
+              <motion.p
                 className="mt-2 text-sm text-red-600 text-right"
                 initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -134,11 +145,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, isLoading = false }) => 
           <motion.button
             type="submit"
             disabled={isLoading}
-            className={`w-full py-3 px-4 rounded-lg font-medium text-white transition-all duration-200 ${
-              isLoading
-                ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transform hover:scale-105'
-            } focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
+            className={`w-full py-3 px-4 rounded-lg font-medium text-white transition-all duration-200 ${isLoading
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transform hover:scale-105'
+              } focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
             whileHover={!isLoading ? { scale: 1.02 } : {}}
             whileTap={!isLoading ? { scale: 0.98 } : {}}
           >
@@ -151,13 +161,28 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, isLoading = false }) => 
               'تسجيل الدخول'
             )}
           </motion.button>
+
         </form>
+        <Link to="/register">
+          <motion.button
+            className={`w-full py-3 px-4 mt-3 rounded-lg font-medium text-white transition-all duration-200 ${isLoading
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transform hover:scale-105'
+              } focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
+            whileHover={!isLoading ? { scale: 1.02 } : {}}
+            whileTap={!isLoading ? { scale: 0.98 } : {}}
+          >
+            انشاء حساب
+          </motion.button>
+        </Link>
+
 
         {/* Footer Links */}
         <div className="mt-6 text-center">
           <a href="/forgot-password" className="text-sm text-blue-600 hover:text-blue-800 transition-colors duration-200">
             نسيت كلمة المرور؟
           </a>
+
         </div>
       </div>
     </motion.div>

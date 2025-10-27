@@ -1,26 +1,49 @@
-import { createBrowserRouter, createRoutesFromElements, Route } from "react-router";
+import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
 import RootLayout from "../pages/Layout";
-import Home from "../pages/Home";
+import HomePage from "../pages/HomePage";
 import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
-import TestPage from "../pages/TestPage";
-import Images from "../pages/Images";
-import TestHook from "../Hooks/TestHook";
+import Register from "../pages/Register";
+import ProtectedRoute from "../components/auth/ProtectedRoute";
+
+const token = localStorage.getItem("token");
+const user = localStorage.getItem("user");
+const userData = user ? JSON.parse(user) : null;
+console.log(token);
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <>
-            {/* Root Layout */}
             <Route path="/" element={<RootLayout />}>
-                <Route index element={<Home />} />
-                <Route path="login" element={<Login />} />
-                <Route path="dashboard" element={<Dashboard />} />
-                <Route path="psychology" element={< TestPage />} />
-                <Route path="philosophy" element={<Images />} />
-                <Route path="students" element={<TestHook />} />
-                <Route path="contact" element={<Home />} />
+                <Route
+                    index
+                    element={
+                        <ProtectedRoute isAllowed={!!token} redirectPath="/login" data={userData}>
+                            <HomePage />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="dashboard"
+                    element={
+                        <ProtectedRoute isAllowed={!!token} redirectPath="/login" data={userData}>
+                            <Dashboard />
+                        </ProtectedRoute>
+                    }
+                />
+
             </Route>
+            <Route
+                path="login"
+                element={<Login />}
+            />
+            <Route
+                path="register"
+                element={<Register />}
+            />
         </>
+
     )
 );
 
