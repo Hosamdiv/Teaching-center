@@ -6,29 +6,52 @@ import { useMutation } from '@tanstack/react-query';
 import { toast, ToastContainer } from 'react-toastify';
 import type { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../app/features/product/usersSlice';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch()
   const loginUser = async (userData: { email: string; password: string }) => {
     try {
-      const response = await axiosApi.post("/users/login", userData);
-      return response.data;
+      const { data } = await axiosApi.post("/users/login", userData);
+
+
+      return data;
     } catch (error: unknown) {
       const err = error as AxiosError<{ message?: string }>;
 
       throw err?.response?.data || { message: "حدث خطأ أثناء تسجيل الدخول" };
     }
+
   };
+
   const mutation = useMutation({
     mutationFn: loginUser,
     onSuccess: (data) => {
-      toast.success('تم تسجيل الدخول بنجاح 🎉', { position: 'top-right' });
-
+      localStorage.setItem("user", JSON.stringify(data.user));
       localStorage.setItem("token", data.token);
-      console.log("Token saved:", data.token);
+      toast.success('تم تسجيل الدخول بنجاح 🎉', { position: 'top-right' });
+      dispatch(
+        setUser({
+          id: data.user._id,
+          name: data.user.name,
+          email: data.user.email,
+          isAdmin: data.user.isAdmin,
+          token: data.token,
+        })
+      );
+
+
       setTimeout(() => {
-        location.replace("/")
+        const role = data.user?.isAdmin;
+        console.log(role);
+
+        if (role) {
+          navigate("/dashboard");
+        } else {
+          navigate("/");
+        }
       }, 1500);
     },
 
@@ -58,7 +81,8 @@ const Login: React.FC = () => {
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
           <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-indigo-400/20 to-blue-400/20 rounded-full blur-3xl"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-purple-400/10 to-pink-400/10 rounded-full blur-3xl"></div>
+          <ToastContainer position="top-right" autoClose={3000} />
+
         </div>
 
         <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
