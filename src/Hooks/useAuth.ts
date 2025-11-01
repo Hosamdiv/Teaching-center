@@ -1,15 +1,15 @@
-// hooks/useAuth.ts
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-export function useAuth() {
-  const [user, setUser] = useState(null);
+export const useAuth = () => {
+  const navigate = useNavigate();
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    const userData = localStorage.getItem("user");
 
-    if (token && userData) {
-      setUser(JSON.parse(userData));
+    if (!token || !userData) {
+      navigate("/login");
     }
-  }, []);
-
-  return user;
-}
+  }, [navigate]);
+};
