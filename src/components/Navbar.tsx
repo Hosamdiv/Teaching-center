@@ -10,8 +10,11 @@ import {
 
   FaPhone,
   FaUser,
+  FaCog,
 } from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '../app/features/product/usersSlice';
 
 interface NavItem {
   name: string;
@@ -26,6 +29,8 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
 
+  const user = useSelector(selectCurrentUser);
+  console.log(user?.isAdmin);
 
   const token = localStorage.getItem("token")
 
@@ -52,6 +57,15 @@ const Navbar = () => {
       href: '/philosophy',
       icon: <FaLightbulb className="w-4 h-4 text-yellow-500" />
     },
+    ...(user?.isAdmin
+      ? [
+        {
+          name: "لوحة التحكم",
+          href: "/dashboard",
+          icon: <FaCog className="w-4 h-4 text-green-600" />
+        }
+      ]
+      : [])
 
 
   ];
