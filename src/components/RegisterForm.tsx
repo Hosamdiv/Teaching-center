@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaUser, FaLock, FaEye, FaEyeSlash, FaGraduationCap } from 'react-icons/fa';
+import { Link } from 'react-router';
+import ButtonMobile from './ui/ButtonMobile';
 
 interface RegisterFormProps {
   onRegister: (name: string, email: string, password: string) => void;
-  isLoading?: boolean;
 }
 
-const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, isLoading = false }) => {
+const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister }) => {
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<{ name?: string; email?: string; password?: string; confirmPassword?: string }>({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,6 +42,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, isLoading = fal
       valid = false;
     }
 
+    setIsLoading(true)
+
 
     if (!valid) {
       setErrors(newErrors);
@@ -46,6 +51,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, isLoading = fal
     }
 
     onRegister(name, email, password);
+
+    setTimeout(() => {
+      setIsLoading(false)
+
+    }, 1500);
+
   };
 
   return (
@@ -162,26 +173,43 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, isLoading = fal
           </div>
 
           {/* Submit Button */}
+
+          {isLoading ? (
+            <ButtonMobile isLoading
+              styles='bg-gradient-to-r from-blue-600 to-purple-600'
+            >
+              جاري انشاء حساب...
+            </ButtonMobile>
+          ) : (
+            <motion.button
+              type="submit"
+              disabled={isLoading}
+              className={`w-full py-3 px-4 rounded-lg font-medium text-white transition-all duration-200 cursor-not-allowed
+               bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transform hover:scale-105
+                focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
+              whileHover={!isLoading ? { scale: 1.02 } : {}}
+              whileTap={!isLoading ? { scale: 0.98 } : {}}
+            >
+
+              إنشاء الحساب
+
+            </motion.button>
+          )}
+        </form>
+        <Link to="/login">
           <motion.button
-            type="submit"
-            disabled={isLoading}
-            className={`w-full py-3 px-4 rounded-lg font-medium text-white transition-all duration-200 ${isLoading
+            className={`w-full py-3 px-4 mt-3 rounded-lg font-medium text-white transition-all duration-200 ${isLoading
+
               ? 'bg-gray-400 cursor-not-allowed'
               : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transform hover:scale-105'
               } focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
             whileHover={!isLoading ? { scale: 1.02 } : {}}
             whileTap={!isLoading ? { scale: 0.98 } : {}}
           >
-            {isLoading ? (
-              <div className="flex items-center justify-center space-x-2 space-x-reverse">
-                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                <span>جاري إنشاء الحساب...</span>
-              </div>
-            ) : (
-              'إنشاء الحساب'
-            )}
+
+            تسجيل دخول
           </motion.button>
-        </form>
+        </Link>
 
         {/* Footer Links */}
         <div className="mt-6 text-center">

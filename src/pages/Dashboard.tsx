@@ -1,57 +1,38 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import LoginForm from '../components/LoginForm';
-import SubscriptionManager from '../components/SubscriptionManager';
+import { FaUsers, FaVideo, FaChartLine, FaUserGraduate } from 'react-icons/fa';
 import VideoManager from '../components/VideoManager';
-import { FaUsers, FaVideo, FaChartLine, FaCog, FaSignOutAlt } from 'react-icons/fa';
+import UsersPage from './dashboard/UsersPage';
 
-type TabType = 'subscriptions' | 'videos' | 'analytics' | 'settings';
+type TabType = 'subscriptions' | 'videos' | 'analytics' | 'students';
 
 const Dashboard: React.FC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [activeTab, setActiveTab] = useState<TabType>('subscriptions');
-  const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = async (_email: string, _password: string) => {
-    setIsLoading(true);
-    console.log(_email);
-    console.log(_password);
 
-    // Simulate login delay
-    setTimeout(() => {
-      setIsLoggedIn(true);
-      setIsLoading(false);
-    }, 1500);
-  };
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-  };
 
-  if (isLoggedIn) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4">
-        <LoginForm onLogin={handleLogin} isLoading={isLoading} />
-      </div>
-    );
-  }
 
   const tabs = [
     { id: 'subscriptions', name: 'الإشتراكات', icon: FaUsers, color: 'blue' },
     { id: 'videos', name: 'الفيديوهات', icon: FaVideo, color: 'green' },
     { id: 'analytics', name: 'الإحصائيات', icon: FaChartLine, color: 'purple' },
-    { id: 'settings', name: 'الإعدادات', icon: FaCog, color: 'gray' }
+    {
+      name: 'الطلاب',
+      id: 'students',
+      icon: FaUserGraduate, color: "emerald"
+    },
   ];
 
   const renderTabContent = () => {
     switch (activeTab) {
       case 'subscriptions':
-        return <SubscriptionManager />;
+        return
       case 'videos':
-        return <VideoManager />;
+        return <VideoManager />
       case 'analytics':
         return (
-          <div className="max-w-7xl mx-auto p-6">
+          <div className=" mx-5 ">
             <motion.div
               className="mb-8"
               initial={{ opacity: 0, y: -20 }}
@@ -149,86 +130,9 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
         );
-      case 'settings':
+      case 'students':
         return (
-          <div className="max-w-7xl mx-auto p-6">
-            <motion.div
-              className="mb-8"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <h1 className="text-3xl font-bold text-gray-900 mb-2 text-right">الإعدادات</h1>
-              <p className="text-gray-600 text-right">تخصيص إعدادات المركز التعليمي</p>
-            </motion.div>
-
-            <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
-              <div className="space-y-6">
-                <div>
-                  <h3 className="text-lg font-semibold mb-4 text-right">إعدادات عامة</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2 text-right">اسم المركز</label>
-                      <input
-                        type="text"
-                        defaultValue="مركز التدريس - علم النفس والفلسفة"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-right"
-                        dir="rtl"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2 text-right">البريد الإلكتروني</label>
-                      <input
-                        type="email"
-                        defaultValue="info@teaching-center.com"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-right"
-                        dir="rtl"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-semibold mb-4 text-right">إعدادات الإشتراكات</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2 text-right">الإشتراك الشهري ([جنيه])</label>
-                      <input
-                        type="number"
-                        defaultValue="199"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-right"
-                        dir="rtl"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2 text-right">الإشتراك الربع سنوي (جنيه)</label>
-                      <input
-                        type="number"
-                        defaultValue="549"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-right"
-                        dir="rtl"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2 text-right">الإشتراك السنوي (جنيه)</label>
-                      <input
-                        type="number"
-                        defaultValue="1999"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-right"
-                        dir="rtl"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex justify-end">
-                  <button className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200">
-                    حفظ الإعدادات
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <UsersPage />
         );
       default:
         return null;
@@ -238,50 +142,41 @@ const Dashboard: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Dashboard Header */}
-      <div className="pt-24 pb-6 bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center justify-between">
-            <motion.button
-              onClick={handleLogout}
-              className="flex items-center space-x-2 space-x-reverse px-4 py-2 text-gray-600 hover:text-red-600 transition-colors duration-200"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <FaSignOutAlt />
-              <span>تسجيل الخروج</span>
-            </motion.button>
-
-            <div className="text-right">
-              <h1 className="text-2xl font-bold text-gray-900">مرحباً بك في لوحة التحكم</h1>
-              <p className="text-gray-600">إدارة مركز التدريس التعليمي</p>
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* Tabs */}
       <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-6">
-          <nav className="flex space-x-8 space-x-reverse">
-            {tabs.map((tab) => {
-              const Icon = tab.icon;
-              const isActive = activeTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id as TabType)}
-                  className={`flex items-center space-x-2 space-x-reverse py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200 ${isActive
-                    ? `border-${tab.color}-500 text-${tab.color}-600`
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                    }`}
-                >
-                  <Icon className="w-4 h-4" />
-                  <span>{tab.name}</span>
-                </button>
-              );
-            })}
-          </nav>
-        </div>
+    <div className="w-full overflow-x-auto">
+  <nav
+    className="flex justify-center items-center space-x-8 min-w-max sm:min-w-0 sm:flex-wrap sm:justify-center"
+  >
+    {tabs.map((tab) => {
+      const Icon = tab.icon;
+      const isActive = activeTab === tab.id;
+      const colorClasses: Record<string, string> = {
+        blue: 'border-blue-500 text-blue-600',
+        green: 'border-green-500 text-green-600',
+        purple: 'border-purple-500 text-purple-600',
+        emerald: 'border-emerald-500 text-emerald-600',
+      };
+
+      return (
+        <button
+          key={tab.id}
+          onClick={() => setActiveTab(tab.id as TabType)}
+          className={`flex items-center justify-center space-x-2 space-x-reverse py-3 px-2 border-b-2 font-medium text-sm transition-colors duration-200
+            ${isActive
+              ? colorClasses[tab.color]
+              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+            }`}
+        >
+          <Icon className="w-4 h-4" />
+          <span className="whitespace-nowrap">{tab.name}</span>
+        </button>
+      );
+    })}
+  </nav>
+</div>
+
       </div>
 
       {/* Tab Content */}

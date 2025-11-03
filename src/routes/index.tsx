@@ -1,34 +1,51 @@
-import { createBrowserRouter, createRoutesFromElements, Route } from "react-router";
+import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
 import RootLayout from "../pages/Layout";
-import Home from "../pages/Home";
+import HomePage from "../pages/HomePage";
 import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
-import TestPage from "../pages/TestPage";
-import Images from "../pages/Images";
-import Products from "../pages/Products";
-import Product from "../pages/product";
-import { AiSummary } from "../pages/AiSummary";
-import Register from "../pages/Register";
 
+
+import Register from "../pages/Register";
+import ProtectedRoute from "../components/auth/ProtectedRoute";
+import AdminRoute from "../components/AdminRoute";
+
+const token = localStorage.getItem("token");
+const user = localStorage.getItem("user");
+const userData = user ? JSON.parse(user) : null;
 
 const router = createBrowserRouter(
-    createRoutesFromElements(
-        <>
-            {/* Root Layout */}
-            <Route path="/" element={<RootLayout />}>
-                <Route index element={<Home />} />
-                <Route path="login" element={<Login />} />
-                <Route path="register" element={<Register />} />
-                <Route path="dashboard" element={<Dashboard />} />
-                <Route path="psychology" element={< TestPage />} />
-                <Route path="philosophy" element={<Images />} />
-                <Route path="students" element={<Products />} />
-                <Route path="products" element={<Products />} />
-                <Route path="cart" element={<Product />} />
-                <Route path="aisummary" element={<AiSummary />} />
-            </Route>
-        </>
-    )
+  createRoutesFromElements(
+    <>
+
+      <Route path="/" element={<RootLayout />}>
+        <Route
+          index
+          element={
+            <ProtectedRoute isAllowed={!!token} redirectPath="/login" data={userData}>
+              <HomePage />
+            </ProtectedRoute>
+          }
+        />
+
+
+        {/* 🧑‍💻 صفحة الأدمن فقط */}
+        
+        <Route
+          path="dashboard"
+          element={
+            <AdminRoute>
+              <Dashboard />
+            </AdminRoute>
+          }
+        />
+      </Route>
+
+      {/* 🔑 صفحات الدخول والتسجيل */}
+      <Route path="login" element={<Login />} />
+      <Route path="register" element={<Register />} />
+    </>
+  )
+
 );
 
 export default router;

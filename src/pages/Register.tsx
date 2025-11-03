@@ -22,22 +22,44 @@ const Register: React.FC = () => {
 
             toast.success('تم التسجيل بنجاح 🎉', { position: 'top-right' });
 
+<<<<<<< HEAD
             localStorage.setItem("token", data.token);
+=======
+            localStorage.setItem("token", data.user.name);
+>>>>>>> fixed-version
             console.log(data);
 
             // بعد التسجيل الناجح → تحويل المستخدم
             setTimeout(() => {
+<<<<<<< HEAD
                 navigate("/");
             }, 1500);
         },
         // onError: (error: any) => {
 
         // },
+=======
+                navigate("/login");
+            }, 1500);
+        },
+        onError: (error: string) => {
+            toast.error('فشل التسجيل ', { position: 'top-right' });
+
+            console.log(error);
+
+        },
+>>>>>>> fixed-version
     });
 
     // الدالة اللي تستدعيها الـ RegisterForm
     const handleRegister = (name: string, email: string, password: string) => {
         mutation.mutate({ name, email, password });
+<<<<<<< HEAD
+=======
+        const users = JSON.parse(localStorage.getItem("users") || "[]");
+        users.push({ name, email });
+        localStorage.setItem("users", JSON.stringify(users));
+>>>>>>> fixed-version
     };
 
     return (

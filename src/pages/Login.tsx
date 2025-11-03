@@ -1,22 +1,44 @@
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router';
 import LoginForm from '../components/LoginForm';
 import { FaArrowRight, FaGraduationCap } from 'react-icons/fa';
 import { axiosApi } from '../config/axiosApi';
 import { useMutation } from '@tanstack/react-query';
 import { toast, ToastContainer } from 'react-toastify';
+<<<<<<< HEAD
+=======
+import type { AxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../app/features/product/usersSlice';
+>>>>>>> fixed-version
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const loginUser = async (userData: { email: string; password: string }) => {
+    try {
+      const { data } = await axiosApi.post("/users/login", userData);
 
+<<<<<<< HEAD
   const loginUser = async (userData: { email: string; password: string }) => {
     const response = await axiosApi.post("/users/login", userData);
     return response.data;
+=======
+
+      return data;
+    } catch (error: unknown) {
+      const err = error as AxiosError<{ message?: string }>;
+
+      throw err?.response?.data || { message: "حدث خطأ أثناء تسجيل الدخول" };
+    }
+
+>>>>>>> fixed-version
   };
   const mutation = useMutation({
     mutationFn: loginUser,
     onSuccess: (data) => {
 
+<<<<<<< HEAD
       toast.success('تم تسجيل الدخول بنجاح 🎉', { position: 'top-right' });
 
       localStorage.setItem("token", data.token);
@@ -34,6 +56,53 @@ const Login: React.FC = () => {
   const handleLogin = (email: string, password: string) => {
     mutation.mutate({ email, password });
   };
+=======
+  const mutation = useMutation({
+    mutationFn: loginUser,
+    onSuccess: (data) => {
+      localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("token", data.token);
+      toast.success('تم تسجيل الدخول بنجاح 🎉', { position: 'top-right' });
+      dispatch(
+        setUser({
+          id: data.user._id,
+          name: data.user.name,
+          email: data.user.email,
+          isAdmin: data.user.isAdmin,
+          token: data.token,
+        })
+      );
+
+      const role = data.user?.isAdmin;
+      setTimeout(() => {
+        if (role) {
+          location.replace("/dashboard")
+        } else {
+          location.replace("/")
+
+        }
+      }, 1500);
+
+    },
+
+
+    onError: (error: { message?: string; error?: string }) => {
+
+      const message =
+        error?.message ||
+        error?.error ||
+        "البريد الإلكتروني أو كلمة المرور غير صحيحة";
+
+      toast.error(message, { position: "top-right" });
+    },
+  });
+
+  const handleLogin = (email: string, password: string) => {
+    mutation.mutate({ email, password });
+  };
+
+
+>>>>>>> fixed-version
   return (
     <>
       <ToastContainer position="top-right" autoClose={3000} />
@@ -43,9 +112,16 @@ const Login: React.FC = () => {
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
           <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-indigo-400/20 to-blue-400/20 rounded-full blur-3xl"></div>
+<<<<<<< HEAD
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-purple-400/10 to-pink-400/10 rounded-full blur-3xl"></div>
         </div>
 
+=======
+          <ToastContainer position="top-right" autoClose={3000} />
+
+        </div>
+
+>>>>>>> fixed-version
         <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
           <div className="w-full max-w-6xl">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">

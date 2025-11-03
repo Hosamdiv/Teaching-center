@@ -1,25 +1,52 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaUser, FaLock, FaEye, FaEyeSlash, FaGraduationCap } from 'react-icons/fa';
+import { Link } from 'react-router';
+import ButtonMobile from './ui/ButtonMobile';
 
 interface LoginFormProps {
   onLogin: (email: string, password: string) => void;
-  isLoading?: boolean;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ onLogin, isLoading = false }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setErrors({});
+    const newErrors: { email?: string; password?: string } = {};
 
-   
+    if (!email.trim()) {
+      newErrors.email = "البريد الإلكتروني مطلوب";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = "يرجى إدخال بريد إلكتروني صالح";
+    }
+
+    if (!password.trim()) {
+      newErrors.password = "كلمة المرور مطلوبة";
+    } else if (password.length < 6) {
+      newErrors.password = "كلمة المرور يجب أن تكون على الأقل 6 أحرف";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return; // وقف الإرسال لو في أخطاء
+    }
+    setIsLoading(true)
+
+
+    setTimeout(() => {
+      setIsLoading(false)
+
+    }, 1500);
+    setErrors({});
     onLogin(email, password);
   };
+
 
   return (
     <motion.div
@@ -56,17 +83,17 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, isLoading = false }) => 
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className={`block w-full pr-12 pl-4 py-4 border-2 rounded-2xl text-right transition-all duration-300 text-lg text-gray-800 placeholder-gray-500 ${
-                  errors.email 
-                    ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20 bg-red-50' 
-                    : 'border-gray-200 focus:border-blue-500 focus:ring-blue-500/20 hover:border-gray-300 bg-white'
-                } focus:outline-none focus:ring-4 focus:ring-opacity-20`}
+                className={`block w-full pr-12 pl-4 py-4 border-2 rounded-2xl text-right transition-all duration-300 text-lg text-gray-800 placeholder-gray-500 ${errors.email
+                  ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20 bg-red-50'
+                  : 'border-gray-200 focus:border-blue-500 focus:ring-blue-500/20 hover:border-gray-300 bg-white'
+                  } focus:outline-none focus:ring-4 focus:ring-opacity-20`}
                 placeholder="أدخل بريدك الإلكتروني"
                 dir="rtl"
               />
+
             </div>
             {errors.email && (
-              <motion.p 
+              <motion.p
                 className="mt-2 text-sm text-red-600 text-right"
                 initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -90,13 +117,13 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, isLoading = false }) => 
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className={`block w-full pr-12 pl-4 py-4 border-2 rounded-2xl text-right transition-all duration-300 text-lg text-gray-800 placeholder-gray-500 ${
-                  errors.password 
-                    ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20 bg-red-50' 
-                    : 'border-gray-200 focus:border-blue-500 focus:ring-blue-500/20 hover:border-gray-300 bg-white'
-                } focus:outline-none focus:ring-4 focus:ring-opacity-20`}
+                className={`block w-full pr-12 pl-4 py-4 border-2 rounded-2xl text-right transition-all duration-300 text-lg text-gray-800 placeholder-gray-500 ${errors.password
+                  ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20 bg-red-50'
+                  : 'border-gray-200 focus:border-blue-500 focus:ring-blue-500/20 hover:border-gray-300 bg-white'
+                  } focus:outline-none focus:ring-4 focus:ring-opacity-20`}
                 placeholder="أدخل كلمة المرور"
                 dir="rtl"
+
               />
               <button
                 type="button"
@@ -111,7 +138,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, isLoading = false }) => 
               </button>
             </div>
             {errors.password && (
-              <motion.p 
+              <motion.p
                 className="mt-2 text-sm text-red-600 text-right"
                 initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -122,36 +149,54 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, isLoading = false }) => 
           </div>
 
           {/* Submit Button */}
+          {isLoading ? (
+            <ButtonMobile
+              styles=' bg-gradient-to-r from-blue-600 to-purple-600'
+              isLoading>
+              جاري تسجيل الدخول...
+            </ButtonMobile>
+          ) :
+            (
+              <motion.button
+                type="submit"
+                disabled={isLoading}
+                className={`w-full py-3 px-4 rounded-lg font-medium text-white transition-all duration-200 
+                bg-gray-400 cursor-not-allowed
+                 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transform hover:scale-105
+                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
+                whileHover={!isLoading ? { scale: 1.02 } : {}}
+                whileTap={!isLoading ? { scale: 0.98 } : {}}
+              >
+                تسجيل دخول
+
+              </motion.button>
+
+            )
+          }
+        </form>
+        <Link to="/register">
           <motion.button
-            type="submit"
-            disabled={isLoading}
-            className={`w-full py-3 px-4 rounded-lg font-medium text-white transition-all duration-200 ${
-              isLoading
-                ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transform hover:scale-105'
-            } focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
+            className={`w-full py-3 px-4 mt-3 rounded-lg font-medium text-white transition-all duration-200 ${isLoading
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transform hover:scale-105'
+              } focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
             whileHover={!isLoading ? { scale: 1.02 } : {}}
             whileTap={!isLoading ? { scale: 0.98 } : {}}
           >
-            {isLoading ? (
-              <div className="flex items-center justify-center space-x-2 space-x-reverse">
-                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                <span>جاري تسجيل الدخول...</span>
-              </div>
-            ) : (
-              'تسجيل الدخول'
-            )}
+            انشاء حساب
           </motion.button>
-        </form>
+        </Link>
+
 
         {/* Footer Links */}
         <div className="mt-6 text-center">
           <a href="/forgot-password" className="text-sm text-blue-600 hover:text-blue-800 transition-colors duration-200">
             نسيت كلمة المرور؟
           </a>
+
         </div>
       </div>
-    </motion.div>
+    </motion.div >
   );
 };
 

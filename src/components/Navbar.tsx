@@ -7,12 +7,17 @@ import {
   FaBars,
   FaTimes,
   FaHome,
-  FaUserGraduate,
+
   FaPhone,
   FaUser,
+  FaCog,
 } from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router';
-import { MdDashboard } from 'react-icons/md';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '../app/features/product/usersSlice';
+import Button from './ui/Button';
+import ButtonMobile from './ui/ButtonMobile';
+
 
 interface NavItem {
   name: string;
@@ -21,11 +26,32 @@ interface NavItem {
   lengths?: number;
 }
 
-const Navbar: React.FC = () => {
+
+const Navbar = () => {
+
+  const user = useSelector(selectCurrentUser);
 
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate();
+
+
+  const token = localStorage.getItem("token")
+
+  const handleLogout = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      location.replace("/login");
+      setIsLoading(false);
+    }, 1500);
+
+  };
+
+
+
   const navItems: NavItem[] = [
     {
       name: 'الرئيسية',
@@ -42,18 +68,20 @@ const Navbar: React.FC = () => {
       href: '/philosophy',
       icon: <FaLightbulb className="w-4 h-4 text-yellow-500" />
     },
-    {
-      name: 'الطلاب',
-      href: '/students',
-      icon: <FaUserGraduate className="w-4 h-4 text-emerald-600" />
-    },
-    {
-      name: 'dashboard',
-      href: '/dashboard',
-      icon: <MdDashboard className="w-4 h-4 text-emerald-600" />
-    },
+
+
+    ...(user?.isAdmin
+      ? [
+        {
+          name: "لوحة التحكم",
+          href: "/dashboard",
+          icon: <FaCog className="w-4 h-4 text-green-600" />
+        }
+      ]
+      : [])
 
   ];
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -136,43 +164,75 @@ const Navbar: React.FC = () => {
           <div className="flex items-center space-x-3 space-x-reverse">
 
             {/* Login Button */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Link
-                to="/login"
-                className={`hidden lg:inline-flex items-center space-x-2 space-x-reverse px-5 py-3 rounded-lg font-medium transition-all duration-300 ${scrolled
-                  ? 'bg-slate-800 text-white hover:bg-slate-700 shadow-md'
-                  : 'bg-white text-slate-800 hover:bg-slate-100 shadow-md'
-                  }`}
+            {!token ? (
+              <>
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.8 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <Link
+                    to="/login"
+                    className={`hidden lg:inline-flex items-center space-x-2 space-x-reverse px-5 py-3 rounded-lg font-medium transition-all duration-300 ${scrolled
+                      ? 'bg-slate-800 text-white hover:bg-slate-700 shadow-md'
+                      : 'bg-white text-slate-800 hover:bg-slate-100 shadow-md'
+                      }`}
+                  >
+                    <FaUser className="w-4 h-4" />
+                    <span>تسجيل الدخول</span>
+                  </Link>
+                </motion.div>
+                {/*  Register Button */}
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.8 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <Link
+                    to="#"
+                    className={`hidden lg:inline-flex items-center space-x-2 space-x-reverse px-5 py-3 rounded-lg font-medium transition-all duration-300 ${scrolled
+                      ? 'bg-slate-800 text-white hover:bg-slate-700 shadow-md'
+                      : 'bg-white text-slate-800 hover:bg-slate-100 shadow-md'
+                      }`}
+                  >
+                    <FaUser className="w-4 h-4" />
+                    <span>انشاء حساب</span>
+                  </Link>
+                </motion.div>
+              </>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.8 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
-                <FaUser className="w-4 h-4" />
-                <span>تسجيل الدخول</span>
-              </Link>
-            </motion.div>
-            {/*  Register Button */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Link
-                to="/register"
-                className={`hidden lg:inline-flex items-center space-x-2 space-x-reverse px-5 py-3 rounded-lg font-medium transition-all duration-300 ${scrolled
-                  ? 'bg-slate-800 text-white hover:bg-slate-700 shadow-md'
-                  : 'bg-white text-slate-800 hover:bg-slate-100 shadow-md'
-                  }`}
-              >
-                <FaUser className="w-4 h-4" />
-                <span>Register</span>
-              </Link>
-            </motion.div>
+
+                {isLoading ? (
+                  <Button styles='bg-slate-800' isLoading={true} >تسجيل خروج</Button>
+                ) : (
+                  // 🔹 الزر العادي
+                  <Link
+                    onClick={handleLogout}
+                    to="#"
+                    className={`hidden lg:inline-flex items-center space-x-2 space-x-reverse px-5 py-3 rounded-lg font-medium transition-all duration-300 ${scrolled
+                      ? 'bg-slate-800 text-white hover:bg-slate-700 shadow-md'
+                      : 'bg-white text-slate-800 hover:bg-slate-100 shadow-md'
+                      }`}
+                  >
+                    <FaUser className="w-4 h-4" />
+                    <span>تسجيل خروج</span>
+                  </Link>
+                )}
+              </motion.div>
+            )
+            }
+
             {/* Contact Button */}
             <motion.a
               href="https://wa.me/201013297966"
@@ -217,6 +277,7 @@ const Navbar: React.FC = () => {
       {/* Mobile Navigation */}
       <AnimatePresence>
         {isOpen && (
+
           <motion.div
             className="lg:hidden bg-white border-t border-gray-200 shadow-lg"
             initial={{ opacity: 0, height: 0 }}
@@ -255,21 +316,74 @@ const Navbar: React.FC = () => {
 
 
               {/* Mobile Login Button */}
-              <motion.div
-                className=" border-t border-gray-200"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.8 }}
-              >
-                <Link
-                  to="/login"
-                  className="inline-flex items-center justify-center w-full space-x-2 space-x-reverse px-6 py-4 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-700 transition-all duration-200 shadow-md"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <FaUser className="w-5 h-5" />
-                  <span className="text-lg">تسجيل الدخول</span>
-                </Link>
-              </motion.div>
+
+
+              {!token ? (
+                <>
+                  <motion.div
+                    className=" border-t border-gray-200"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.8 }}
+                  >
+                    <Link
+                      to="/login"
+                      className="inline-flex items-center justify-center w-full space-x-2 space-x-reverse px-6 py-4 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-700 transition-all duration-200 shadow-md"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <FaUser className="w-5 h-5" />
+                      <span className="text-lg">تسجيل الدخول</span>
+                    </Link>
+                  </motion.div>
+
+                  {/* Mobile Register Button */}
+                  <motion.div
+                    className=" border-t border-gray-200"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.8 }}
+                  >
+                    <Link
+                      to="/register"
+                      className="inline-flex items-center justify-center w-full space-x-2 space-x-reverse px-6 py-4 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-700 transition-all duration-200 shadow-md"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <FaUser className="w-5 h-5" />
+                      <span className="text-lg">انشاء حساب</span>
+                    </Link>
+                  </motion.div>
+                </>
+
+              ) :
+                (
+                  <motion.div
+                    className=" border-t border-gray-200"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.8 }}
+                  >
+                    {isLoading ? (
+                      <ButtonMobile styles='bg-slate-800' isLoading={true}>تسجيل خروج</ButtonMobile>
+
+
+                    ) :
+                      (
+
+                        <Link
+
+                          to="#"
+                          className="inline-flex items-center justify-center w-full space-x-2 space-x-reverse px-6 py-4 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-700 transition-all duration-200 shadow-md"
+                          onClick={handleLogout}
+                        >
+                          <FaUser className="w-5 h-5" />
+                          <span className="text-lg">تسجيل خروج</span>
+                        </Link>
+                      )}
+
+                  </motion.div>
+                )
+              }
+
 
               {/* Mobile Register Button */}
               <motion.div
@@ -288,6 +402,7 @@ const Navbar: React.FC = () => {
                 </Link>
               </motion.div>
               {/* Mobile Contact Button */}
+
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -306,9 +421,10 @@ const Navbar: React.FC = () => {
               </motion.div>
             </div>
           </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
+        )
+        }
+      </AnimatePresence >
+    </nav >
   );
 };
 

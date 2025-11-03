@@ -1,33 +1,22 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { type ReactNode } from "react";
 
 interface IButton {
-
     children: ReactNode;
     styles?: string;
     isLoading?: boolean;
     disabled?: boolean;
 }
 
-const Button = ({ styles = "", children, isLoading = false, disabled = false }: IButton) => {
-    const [scrolled, setScrolled] = useState(false);
+const ButtonMobile = ({ children, isLoading = false, disabled = false, styles }: IButton) => {
 
-    useEffect(() => {
-        const onScroll = () => setScrolled(window.scrollY > 50);
-        window.addEventListener("scroll", onScroll);
-        return () => window.removeEventListener("scroll", onScroll);
-    }, []);
 
     return (
         <button
             type="button"
             disabled={disabled || isLoading}
-            className={`hidden lg:flex  items-center justify-center space-x-2 space-x-reverse px-4 py-2 rounded-lg font-medium transition-all duration-200 
-        ${isLoading ? "opacity-70 cursor-not-allowed" : "hover:opacity-90"} 
-        ${styles} 
-        ${scrolled
-                    ? "bg-slate-800 text-white hover:bg-slate-700 shadow-md"
-                    : "bg-white text-slate-800 hover:bg-slate-100 shadow-md"
-                }`}
+            className={`${styles} inline-flex  items-center justify-center w-full space-x-2 space-x-reverse px-6 py-4 
+             text-white rounded-lg font-medium  shadow-md `}
+
         >
             {isLoading && (
                 <svg
@@ -56,4 +45,4 @@ const Button = ({ styles = "", children, isLoading = false, disabled = false }: 
     );
 };
 
-export default Button;
+export default ButtonMobile;
