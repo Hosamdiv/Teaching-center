@@ -4,65 +4,33 @@ import { FaArrowRight, FaGraduationCap } from 'react-icons/fa';
 import { axiosApi } from '../config/axiosApi';
 import { useMutation } from '@tanstack/react-query';
 import { toast, ToastContainer } from 'react-toastify';
-<<<<<<< HEAD
-=======
 import type { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../app/features/product/usersSlice';
->>>>>>> fixed-version
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
   const loginUser = async (userData: { email: string; password: string }) => {
     try {
       const { data } = await axiosApi.post("/users/login", userData);
-
-<<<<<<< HEAD
-  const loginUser = async (userData: { email: string; password: string }) => {
-    const response = await axiosApi.post("/users/login", userData);
-    return response.data;
-=======
-
       return data;
     } catch (error: unknown) {
       const err = error as AxiosError<{ message?: string }>;
-
       throw err?.response?.data || { message: "حدث خطأ أثناء تسجيل الدخول" };
     }
-
->>>>>>> fixed-version
   };
-  const mutation = useMutation({
-    mutationFn: loginUser,
-    onSuccess: (data) => {
 
-<<<<<<< HEAD
-      toast.success('تم تسجيل الدخول بنجاح 🎉', { position: 'top-right' });
-
-      localStorage.setItem("token", data.token);
-      console.log(data);
-
-      // بعد التسجيل الناجح → تحويل المستخدم
-      setTimeout(() => {
-        navigate("/");
-      }, 1500);
-    },
-    // onError: (error: any) => {
-
-    // },
-  });
-  const handleLogin = (email: string, password: string) => {
-    mutation.mutate({ email, password });
-  };
-=======
   const mutation = useMutation({
     mutationFn: loginUser,
     onSuccess: (data) => {
       localStorage.setItem("user", JSON.stringify(data.user));
       localStorage.setItem("token", data.token);
+
       toast.success('تم تسجيل الدخول بنجاح 🎉', { position: 'top-right' });
+
       dispatch(
         setUser({
           id: data.user._id,
@@ -74,20 +42,16 @@ const Login: React.FC = () => {
       );
 
       const role = data.user?.isAdmin;
+
       setTimeout(() => {
         if (role) {
-          location.replace("/dashboard")
+          location.replace("/dashboard");
         } else {
-          location.replace("/")
-
+          location.replace("/");
         }
       }, 1500);
-
     },
-
-
     onError: (error: { message?: string; error?: string }) => {
-
       const message =
         error?.message ||
         error?.error ||
@@ -101,8 +65,6 @@ const Login: React.FC = () => {
     mutation.mutate({ email, password });
   };
 
-
->>>>>>> fixed-version
   return (
     <>
       <ToastContainer position="top-right" autoClose={3000} />
@@ -112,27 +74,18 @@ const Login: React.FC = () => {
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
           <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-indigo-400/20 to-blue-400/20 rounded-full blur-3xl"></div>
-<<<<<<< HEAD
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-purple-400/10 to-pink-400/10 rounded-full blur-3xl"></div>
         </div>
 
-=======
-          <ToastContainer position="top-right" autoClose={3000} />
-
-        </div>
-
->>>>>>> fixed-version
         <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
           <div className="w-full max-w-6xl">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              {/* Left Side - Enhanced Welcome Content */}
+              {/* Left Side */}
               <motion.div
                 className="text-center lg:text-right"
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                {/* Logo */}
                 <div className="flex justify-center lg:justify-end mb-8">
                   <motion.div
                     className="relative"
@@ -146,7 +99,6 @@ const Login: React.FC = () => {
                   </motion.div>
                 </div>
 
-                {/* Enhanced Features List */}
                 <div className="space-y-6 text-right mb-10">
                   <motion.div
                     className="flex items-center space-x-4 space-x-reverse justify-center lg:justify-end group"
@@ -155,7 +107,9 @@ const Login: React.FC = () => {
                     transition={{ duration: 0.6, delay: 0.2 }}
                   >
                     <div className="w-4 h-4 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full shadow-lg group-hover:scale-125 transition-transform duration-300"></div>
-                    <span className="text-gray-700 text-lg font-medium group-hover:text-gray-900 transition-colors duration-300">محاضرات مسجلة عالية الجودة</span>
+                    <span className="text-gray-700 text-lg font-medium group-hover:text-gray-900 transition-colors duration-300">
+                      محاضرات مسجلة عالية الجودة
+                    </span>
                   </motion.div>
 
                   <motion.div
@@ -165,7 +119,9 @@ const Login: React.FC = () => {
                     transition={{ duration: 0.6, delay: 0.3 }}
                   >
                     <div className="w-4 h-4 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full shadow-lg group-hover:scale-125 transition-transform duration-300"></div>
-                    <span className="text-gray-700 text-lg font-medium group-hover:text-gray-900 transition-colors duration-300">محتوى تعليمي متخصص</span>
+                    <span className="text-gray-700 text-lg font-medium group-hover:text-gray-900 transition-colors duration-300">
+                      محتوى تعليمي متخصص
+                    </span>
                   </motion.div>
 
                   <motion.div
@@ -175,11 +131,12 @@ const Login: React.FC = () => {
                     transition={{ duration: 0.6, delay: 0.4 }}
                   >
                     <div className="w-4 h-4 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full shadow-lg group-hover:scale-125 transition-transform duration-300"></div>
-                    <span className="text-gray-700 text-lg font-medium group-hover:text-gray-900 transition-colors duration-300">إشتراكات مرنة ومناسبة</span>
+                    <span className="text-gray-700 text-lg font-medium group-hover:text-gray-900 transition-colors duration-300">
+                      إشتراكات مرنة ومناسبة
+                    </span>
                   </motion.div>
                 </div>
 
-                {/* Enhanced Back Button */}
                 <motion.button
                   onClick={() => navigate('/')}
                   className="group inline-flex items-center space-x-3 space-x-reverse px-8 py-4 bg-white/80 backdrop-blur-sm text-gray-700 rounded-2xl font-bold hover:bg-white transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 border border-gray-200/50"
@@ -204,7 +161,6 @@ const Login: React.FC = () => {
         </div>
       </div>
     </>
-
   );
 };
 
