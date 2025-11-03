@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaUser, FaLock, FaEye, FaEyeSlash, FaGraduationCap } from 'react-icons/fa';
 import { Link } from 'react-router';
+import ButtonMobile from './ui/ButtonMobile';
 
 interface LoginFormProps {
   onLogin: (email: string, password: string) => void;
-  isLoading?: boolean;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ onLogin, isLoading = false }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
 
 
@@ -35,7 +36,13 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, isLoading = false }) => 
       setErrors(newErrors);
       return; // وقف الإرسال لو في أخطاء
     }
+    setIsLoading(true)
 
+
+    setTimeout(() => {
+      setIsLoading(false)
+
+    }, 1500);
     setErrors({});
     onLogin(email, password);
   };
@@ -142,32 +149,36 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, isLoading = false }) => 
           </div>
 
           {/* Submit Button */}
-          <motion.button
-            type="submit"
-            disabled={isLoading}
-            className={`w-full py-3 px-4 rounded-lg font-medium text-white transition-all duration-200 ${isLoading
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transform hover:scale-105'
-              } focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
-            whileHover={!isLoading ? { scale: 1.02 } : {}}
-            whileTap={!isLoading ? { scale: 0.98 } : {}}
-          >
-            {isLoading ? (
-              <div className="flex items-center justify-center space-x-2 space-x-reverse">
-                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                <span>جاري تسجيل الدخول...</span>
-              </div>
-            ) : (
-              'تسجيل الدخول'
-            )}
-          </motion.button>
+          {isLoading ? (
+            <ButtonMobile
+              styles=' bg-gradient-to-r from-blue-600 to-purple-600'
+              isLoading>
+              جاري تسجيل الدخول...
+            </ButtonMobile>
+          ) :
+            (
+              <motion.button
+                type="submit"
+                disabled={isLoading}
+                className={`w-full py-3 px-4 rounded-lg font-medium text-white transition-all duration-200 
+                bg-gray-400 cursor-not-allowed
+                 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transform hover:scale-105
+                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
+                whileHover={!isLoading ? { scale: 1.02 } : {}}
+                whileTap={!isLoading ? { scale: 0.98 } : {}}
+              >
+                تسجيل دخول
 
+              </motion.button>
+
+            )
+          }
         </form>
         <Link to="/register">
           <motion.button
             className={`w-full py-3 px-4 mt-3 rounded-lg font-medium text-white transition-all duration-200 ${isLoading
-                ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transform hover:scale-105'
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transform hover:scale-105'
               } focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
             whileHover={!isLoading ? { scale: 1.02 } : {}}
             whileTap={!isLoading ? { scale: 0.98 } : {}}
@@ -185,7 +196,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, isLoading = false }) => 
 
         </div>
       </div>
-    </motion.div>
+    </motion.div >
   );
 };
 

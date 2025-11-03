@@ -15,6 +15,8 @@ import {
 import { useNavigate, Link } from 'react-router';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../app/features/product/usersSlice';
+import Button from './ui/Button';
+import ButtonMobile from './ui/ButtonMobile';
 
 interface NavItem {
   name: string;
@@ -25,17 +27,24 @@ interface NavItem {
 
 const Navbar = () => {
 
+  const user = useSelector(selectCurrentUser);
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate();
-  const user = useSelector(selectCurrentUser);
 
 
   const token = localStorage.getItem("token")
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user"); navigate("/login");
+    setIsLoading(true);
+    setTimeout(() => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      location.replace("/login");
+      setIsLoading(false);
+    }, 1500);
+
   };
 
 
@@ -198,17 +207,22 @@ const Navbar = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <Link
-                  onClick={handleLogout}
-                  to="#"
-                  className={`hidden lg:inline-flex items-center space-x-2 space-x-reverse px-5 py-3 rounded-lg font-medium transition-all duration-300 ${scrolled
-                    ? 'bg-slate-800 text-white hover:bg-slate-700 shadow-md'
-                    : 'bg-white text-slate-800 hover:bg-slate-100 shadow-md'
-                    }`}
-                >
-                  <FaUser className="w-4 h-4" />
-                  <span>تسجيل خروج</span>
-                </Link>
+                {isLoading ? (
+                  <Button styles='bg-slate-800' isLoading={true} >تسجيل خروج</Button>
+                ) : (
+                  // 🔹 الزر العادي
+                  <Link
+                    onClick={handleLogout}
+                    to="#"
+                    className={`hidden lg:inline-flex items-center space-x-2 space-x-reverse px-5 py-3 rounded-lg font-medium transition-all duration-300 ${scrolled
+                      ? 'bg-slate-800 text-white hover:bg-slate-700 shadow-md'
+                      : 'bg-white text-slate-800 hover:bg-slate-100 shadow-md'
+                      }`}
+                  >
+                    <FaUser className="w-4 h-4" />
+                    <span>تسجيل خروج</span>
+                  </Link>
+                )}
               </motion.div>
             )
             }
@@ -339,20 +353,30 @@ const Navbar = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3, delay: 0.8 }}
                   >
-                    <Link
+                    {isLoading ? (
+                      <ButtonMobile styles='bg-slate-800' isLoading={true}>تسجيل خروج</ButtonMobile>
 
-                      to="#"
-                      className="inline-flex items-center justify-center w-full space-x-2 space-x-reverse px-6 py-4 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-700 transition-all duration-200 shadow-md"
-                      onClick={handleLogout}
-                    >
-                      <FaUser className="w-5 h-5" />
-                      <span className="text-lg">تسجيل خروج</span>
-                    </Link>
+
+                    ) :
+                      (
+
+                        <Link
+
+                          to="#"
+                          className="inline-flex items-center justify-center w-full space-x-2 space-x-reverse px-6 py-4 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-700 transition-all duration-200 shadow-md"
+                          onClick={handleLogout}
+                        >
+                          <FaUser className="w-5 h-5" />
+                          <span className="text-lg">تسجيل خروج</span>
+                        </Link>
+                      )}
+
                   </motion.div>
                 )
               }
 
               {/* Mobile Contact Button */}
+
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -371,9 +395,10 @@ const Navbar = () => {
               </motion.div>
             </div>
           </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
+        )
+        }
+      </AnimatePresence >
+    </nav >
   );
 };
 

@@ -1,6 +1,6 @@
 import { RouterProvider } from "react-router";
-import router from "./routes";
 import { ToastContainer } from "react-toastify";
+import router from "./routes";
 
 const App = () => {
 
@@ -8,6 +8,7 @@ const App = () => {
     <div>
       <ToastContainer />
       <RouterProvider router={router} />
+
     </div>
   );
 };

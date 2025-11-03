@@ -14,9 +14,8 @@ const userData = user ? JSON.parse(user) : null;
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      {/* 🌍 الصفحات داخل الـ Layout */}
+
       <Route path="/" element={<RootLayout />}>
-        {/* 🏠 الصفحة الرئيسية — متاحة فقط لو في توكن */}
         <Route
           index
           element={
@@ -26,7 +25,9 @@ const router = createBrowserRouter(
           }
         />
 
+
         {/* 🧑‍💻 صفحة الأدمن فقط */}
+        
         <Route
           path="dashboard"
           element={

@@ -42,17 +42,16 @@ const Login: React.FC = () => {
         })
       );
 
-
+      const role = data.user?.isAdmin;
       setTimeout(() => {
-        const role = data.user?.isAdmin;
-        console.log(role);
-
         if (role) {
-          navigate("/dashboard");
+          location.replace("/dashboard")
         } else {
-          navigate("/");
+          location.replace("/")
+
         }
       }, 1500);
+
     },
 
 
