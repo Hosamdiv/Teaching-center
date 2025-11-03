@@ -15,9 +15,6 @@ import {
 import { useNavigate, Link } from 'react-router';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../app/features/product/usersSlice';
-import Button from './ui/Button';
-import ButtonMobile from './ui/ButtonMobile';
-
 
 interface NavItem {
   name: string;
@@ -26,28 +23,20 @@ interface NavItem {
   lengths?: number;
 }
 
-
 const Navbar = () => {
-
-  const user = useSelector(selectCurrentUser);
 
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate();
 
+  const user = useSelector(selectCurrentUser);
+  console.log(user?.isAdmin);
 
   const token = localStorage.getItem("token")
 
   const handleLogout = () => {
-    setIsLoading(true);
-    setTimeout(() => {
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      location.replace("/login");
-      setIsLoading(false);
-    }, 1500);
-
+    localStorage.removeItem("token");
+    localStorage.removeItem("user"); navigate("/login");
   };
 
 
@@ -68,8 +57,6 @@ const Navbar = () => {
       href: '/philosophy',
       icon: <FaLightbulb className="w-4 h-4 text-yellow-500" />
     },
-
-
     ...(user?.isAdmin
       ? [
         {
@@ -79,6 +66,7 @@ const Navbar = () => {
         }
       ]
       : [])
+
 
   ];
 
@@ -212,27 +200,20 @@ const Navbar = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-
-                {isLoading ? (
-                  <Button styles='bg-slate-800' isLoading={true} >تسجيل خروج</Button>
-                ) : (
-                  // 🔹 الزر العادي
-                  <Link
-                    onClick={handleLogout}
-                    to="#"
-                    className={`hidden lg:inline-flex items-center space-x-2 space-x-reverse px-5 py-3 rounded-lg font-medium transition-all duration-300 ${scrolled
-                      ? 'bg-slate-800 text-white hover:bg-slate-700 shadow-md'
-                      : 'bg-white text-slate-800 hover:bg-slate-100 shadow-md'
-                      }`}
-                  >
-                    <FaUser className="w-4 h-4" />
-                    <span>تسجيل خروج</span>
-                  </Link>
-                )}
+                <Link
+                  onClick={handleLogout}
+                  to="#"
+                  className={`hidden lg:inline-flex items-center space-x-2 space-x-reverse px-5 py-3 rounded-lg font-medium transition-all duration-300 ${scrolled
+                    ? 'bg-slate-800 text-white hover:bg-slate-700 shadow-md'
+                    : 'bg-white text-slate-800 hover:bg-slate-100 shadow-md'
+                    }`}
+                >
+                  <FaUser className="w-4 h-4" />
+                  <span>تسجيل خروج</span>
+                </Link>
               </motion.div>
             )
             }
-
             {/* Contact Button */}
             <motion.a
               href="https://wa.me/201013297966"
@@ -316,8 +297,6 @@ const Navbar = () => {
 
 
               {/* Mobile Login Button */}
-
-
               {!token ? (
                 <>
                   <motion.div
@@ -362,47 +341,20 @@ const Navbar = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3, delay: 0.8 }}
                   >
-                    {isLoading ? (
-                      <ButtonMobile styles='bg-slate-800' isLoading={true}>تسجيل خروج</ButtonMobile>
+                    <Link
 
-
-                    ) :
-                      (
-
-                        <Link
-
-                          to="#"
-                          className="inline-flex items-center justify-center w-full space-x-2 space-x-reverse px-6 py-4 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-700 transition-all duration-200 shadow-md"
-                          onClick={handleLogout}
-                        >
-                          <FaUser className="w-5 h-5" />
-                          <span className="text-lg">تسجيل خروج</span>
-                        </Link>
-                      )}
-
+                      to="#"
+                      className="inline-flex items-center justify-center w-full space-x-2 space-x-reverse px-6 py-4 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-700 transition-all duration-200 shadow-md"
+                      onClick={handleLogout}
+                    >
+                      <FaUser className="w-5 h-5" />
+                      <span className="text-lg">تسجيل خروج</span>
+                    </Link>
                   </motion.div>
                 )
               }
 
-
-              {/* Mobile Register Button */}
-              <motion.div
-                className=" border-t border-gray-200"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.8 }}
-              >
-                <Link
-                  to="/register"
-                  className="inline-flex items-center justify-center w-full space-x-2 space-x-reverse px-6 py-4 bg-slate-800 text-white rounded-lg font-medium hover:bg-slate-700 transition-all duration-200 shadow-md"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <FaUser className="w-5 h-5" />
-                  <span className="text-lg">انشاء حساب </span>
-                </Link>
-              </motion.div>
               {/* Mobile Contact Button */}
-
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -421,10 +373,9 @@ const Navbar = () => {
               </motion.div>
             </div>
           </motion.div>
-        )
-        }
-      </AnimatePresence >
-    </nav >
+        )}
+      </AnimatePresence>
+    </nav>
   );
 };
 
