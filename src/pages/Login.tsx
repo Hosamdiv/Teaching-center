@@ -12,7 +12,17 @@ import { setUser } from '../app/features/product/usersSlice';
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const token = localStorage.getItem("token")
+  const user = localStorage.getItem("user")
+  const handelNavigate = () => {
+    if (token && user) {
+      navigate("/")
+    } else {
+      toast.error("سجل دخول الاول يا طالب", { position: "top-right" });
+      navigate("/login")
 
+    }
+  }
   const loginUser = async (userData: { email: string; password: string }) => {
     try {
       const { data } = await axiosApi.post("/users/login", userData);
@@ -138,7 +148,7 @@ const Login: React.FC = () => {
                 </div>
 
                 <motion.button
-                  onClick={() => navigate('/')}
+                  onClick={handelNavigate}
                   className="group inline-flex items-center space-x-3 space-x-reverse px-8 py-4 bg-white/80 backdrop-blur-sm text-gray-700 rounded-2xl font-bold hover:bg-white transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 border border-gray-200/50"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
