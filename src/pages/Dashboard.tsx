@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaUsers, FaVideo, FaChartLine, FaUserGraduate } from 'react-icons/fa';
-import VideoManager from '../components/VideoManager';
 import UsersPage from './dashboard/UsersPage';
+import PhilosophyPage from './PhilosophyPage';
 
 type TabType = 'subscriptions' | 'videos' | 'analytics' | 'students';
 
@@ -29,7 +29,7 @@ const Dashboard: React.FC = () => {
       case 'subscriptions':
         return
       case 'videos':
-        return <VideoManager />
+        return <PhilosophyPage />
       case 'analytics':
         return (
           <div className=" mx-5 ">

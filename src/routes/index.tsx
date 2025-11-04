@@ -8,6 +8,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import ProtectedRoute from "../components/auth/ProtectedRoute";
 import AdminRoute from "../components/AdminRoute";
+import PhilosophyPage from "../pages/PhilosophyPage";
 
 const token = localStorage.getItem("token");
 const user = localStorage.getItem("user");
@@ -27,9 +28,16 @@ const router = createBrowserRouter(
           }
         />
 
-
+        <Route
+          path="philosophy"
+          element={
+            <AdminRoute>
+              <PhilosophyPage />
+            </AdminRoute>
+          }
+        />
         {/* 🧑‍💻 صفحة الأدمن فقط */}
-        
+
         <Route
           path="dashboard"
           element={
@@ -38,11 +46,11 @@ const router = createBrowserRouter(
             </AdminRoute>
           }
         />
-      </Route>
+      </Route >
 
       {/* 🔑 صفحات الدخول والتسجيل */}
-      <Route path="login" element={<Login />} />
-      <Route path="register" element={<Register />} />
+      < Route path="login" element={< Login />} />
+      < Route path="register" element={< Register />} />
     </>
   )
 

@@ -19,12 +19,10 @@ const UsersPage = () => {
             const { data } = await axiosApi.get("/users", {
                 headers: { Authorization: `Bearer ${token}` },
             });
-            console.log(data);
 
             return data;
         },
     });
-    console.log(data);
 
     if (isLoading)
         return (
