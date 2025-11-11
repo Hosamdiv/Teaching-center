@@ -8,7 +8,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import ProtectedRoute from "../components/auth/ProtectedRoute";
 import AdminRoute from "../components/AdminRoute";
-import PhilosophyPage from "../pages/PhilosophyPage";
+import ProductPage from "../pages/ProductPage";
 
 const token = localStorage.getItem("token");
 const user = localStorage.getItem("user");
@@ -28,14 +28,11 @@ const router = createBrowserRouter(
           }
         />
 
-        <Route
-          path="philosophy"
-          element={
-            <AdminRoute>
-              <PhilosophyPage />
-            </AdminRoute>
-          }
-        />
+        <Route path="upload" element={
+          <ProtectedRoute isAllowed={!!token} redirectPath="/login" data={userData}>
+            <ProductPage />
+          </ProtectedRoute>
+        } />
         {/* 🧑‍💻 صفحة الأدمن فقط */}
 
         <Route

@@ -7,21 +7,17 @@ import { toast } from "react-toastify";
 const AdminRoute = ({ children }: { children: ReactNode }) => {
   const user = useSelector(selectCurrentUser);
 
-  console.log("isAdmin:", user?.isAdmin);
 
-  // 🚫 لو مفيش مستخدم → رجّعه للصفحة الرئيسية
   if (!user) {
     toast.error("ممنوع تدخل هنا ياض", { position: "top-right" });
     return <Navigate to="/" replace />;
   }
 
-  // 🚫 لو المستخدم مش أدمن → رجّعه للصفحة الرئيسية
   if (!user.isAdmin) {
     toast.error("ممنوع تدخل هنا ياض", { position: "top-right" });
     return <Navigate to="/" replace />;
   }
 
-  // ✅ لو أدمن → خليه يدخل
   return children;
 };
 
