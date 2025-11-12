@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   FaGraduationCap,
-  FaBrain,
   FaLightbulb,
   FaBars,
   FaTimes,
@@ -45,8 +44,7 @@ const Navbar = () => {
 
   const navItems: NavItem[] = [
     { name: 'الرئيسية', href: '/', icon: <FaHome className="w-4 h-4 text-blue-600" /> },
-    { name: 'علم النفس', href: '/psychology', icon: <FaBrain className="w-4 h-4 text-purple-600" /> },
-    { name: 'الفلسفة', href: '/upload', icon: <FaLightbulb className="w-4 h-4 text-yellow-500" /> },
+    { name: 'ابدأ التعلم', href: '/videos', icon: <FaLightbulb className="w-4 h-4 text-yellow-500" /> },
     ...(user?.isAdmin
       ? [{ name: 'لوحة التحكم', href: '/dashboard', icon: <FaCog className="w-4 h-4 text-green-600" /> }]
       : []),

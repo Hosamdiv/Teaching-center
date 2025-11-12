@@ -1,14 +1,14 @@
 import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
 import RootLayout from "../pages/Layout";
 import HomePage from "../pages/HomePage";
-import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 
 
 import Register from "../pages/Register";
 import ProtectedRoute from "../components/auth/ProtectedRoute";
 import AdminRoute from "../components/AdminRoute";
-import ProductPage from "../pages/ProductPage";
+import ProductPage from "../pages/VideosPage";
+import Dashboard from "../pages/dashboard/Dashboard";
 
 const token = localStorage.getItem("token");
 const user = localStorage.getItem("user");
@@ -28,7 +28,7 @@ const router = createBrowserRouter(
           }
         />
 
-        <Route path="upload" element={
+        <Route path="videos" element={
           <ProtectedRoute isAllowed={!!token} redirectPath="/login" data={userData}>
             <ProductPage />
           </ProtectedRoute>

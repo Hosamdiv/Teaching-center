@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaUsers, FaVideo, FaChartLine, FaUserGraduate } from 'react-icons/fa';
-import UsersPage from './dashboard/UsersPage';
-import UploadData from './dashboard/UploadData';
+import UploadData from './UploadData';
+import UsersPage from './UsersPage';
 
 type TabType = 'subscriptions' | 'videos' | 'analytics' | 'students';
 
