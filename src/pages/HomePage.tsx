@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaGraduationCap, FaBrain, FaLightbulb, FaUsers, FaArrowRight, FaPlay, FaBookOpen, FaStar } from 'react-icons/fa';
+import { Link } from 'react-router';
 
 const Home: React.FC = () => {
 
@@ -75,8 +76,10 @@ const Home: React.FC = () => {
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="relative flex items-center gap-3">
+                  <Link to={"/videos"}>
                   <FaPlay className="w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
                   ابدأ التعلم الآن
+                  </Link>
                 </div>
               </motion.button>
 
